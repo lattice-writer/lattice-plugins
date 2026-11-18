@@ -28,3 +28,13 @@ jobs:
           else
             node scripts/validate.mjs
           fi
+  # TEMPORARY (test branch only): prove the runner's minisign reads a minisign 0.12 unencrypted key.
+  minisign-probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - run: sudo apt-get update -q && sudo apt-get install -y -q minisign && minisign -v
+      - run: |
+          echo probe > probe/msg
+          minisign -S -s probe/throwaway.key -m probe/msg -x probe/msg.minisig -t "lattice-plugins file:msg serial:1"
+          minisign -V -p probe/throwaway.pub -m probe/msg -x probe/msg.minisig
