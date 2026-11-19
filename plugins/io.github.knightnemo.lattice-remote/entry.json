@@ -1,0 +1,13 @@
+{
+  "id": "io.github.knightnemo.lattice-remote",
+  "version": "0.4.6",
+  "repository": "https://github.com/lattice-writer/lattice-web-ui",
+  "tag": "v0.4.6",
+  "commit": "3b0b52342b9069cd90980fbf8376b07ecc7e1d41",
+  "path": "plugin",
+  "sha256": "40ceb4db05b137ed74c42309c669aef9a4b69d52cf4991e0de5429054cd8c069",
+  "author": "knightnemo",
+  "categories": [
+    "writing"
+  ]
+}
