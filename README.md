@@ -26,6 +26,16 @@ every platform. The format is documented in Lattice's
 [`docs/themes.md`](https://github.com/leo1oel/lattice/blob/main/docs/themes.md) and
 [`schema/theme-1.json`](schema/theme-1.json).
 
+## Developer guide
+
+New to writing a plugin or a theme? The developer guide in Lattice's user guide walks through
+it step by step, from a hello-world plugin to a merged entry here:
+[Developing plugins](https://leo1oel.github.io/lattice/guide/plugin-development.html)
+([简体中文](https://leo1oel.github.io/lattice/guide/zh-CN/plugin-development.html)). Its
+[Publishing a plugin](https://leo1oel.github.io/lattice/guide/plugin-publishing.html) and
+[Making a theme](https://leo1oel.github.io/lattice/guide/theme-development.html) pages cover this
+repository's side. The sections below are the reference.
+
 ## Submitting a theme
 
 1. Keep your theme in a public GitHub repository as a `*.lattice-theme.json` file,
