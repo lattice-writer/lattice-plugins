@@ -18,21 +18,25 @@ import { checkPlugin, checkPluginEntryShape, fetchPluginFiles, indexPlugin } fro
 
 const outIndex = process.argv.indexOf("--out");
 const out = path.resolve(outIndex === -1 ? "site" : process.argv[outIndex + 1]);
-const baseUrl = (process.env.REGISTRY_BASE_URL ?? "https://leo1oel.github.io/lattice-plugins").replace(/\/$/, "");
+const baseUrl = (process.env.REGISTRY_BASE_URL ?? "https://lattice-writer.github.io/lattice-plugins").replace(/\/$/, "");
+// The registry's address before it moved to lattice-writer. publish.yml mirrors the signed site
+// there for Lattice releases from before the move, and a serial must not go back on either.
+const MIRROR_URL = "https://leo1oel.github.io/lattice-plugins";
 
 // The client refuses an index whose serial is lower than the one it has cached, so the serial
 // must never go back. Pages sits behind a CDN that can serve a stale index.json for minutes,
 // so the run number (monotonic per workflow) is a floor under "published + 1".
-async function previousSerial() {
-  const response = await fetch(`${baseUrl}/index.json?nocache=${Date.now()}`, { cache: "no-store" });
+async function previousSerial(url) {
+  const response = await fetch(`${url}/index.json?nocache=${Date.now()}`, { cache: "no-store" });
   if (response.status === 404) return 0;
-  if (!response.ok) throw new Error(`could not read the published index: HTTP ${response.status}`);
+  if (!response.ok) throw new Error(`could not read the published index at ${url}: HTTP ${response.status}`);
   const { serial } = await response.json();
   if (!Number.isSafeInteger(serial) || serial < 0) throw new Error(`published index has a bad serial: ${serial}`);
   return serial;
 }
 
-const serial = Math.max((await previousSerial()) + 1, Number(process.env.GITHUB_RUN_NUMBER ?? 0));
+const published = Math.max(await previousSerial(baseUrl), await previousSerial(MIRROR_URL));
+const serial = Math.max(published + 1, Number(process.env.GITHUB_RUN_NUMBER ?? 0));
 const generated = new Date().toISOString();
 
 const validate = makeThemeValidator();

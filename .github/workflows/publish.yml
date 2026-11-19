@@ -61,9 +61,50 @@ jobs:
             minisign -S -s "$key" -m "site/$file" -x "site/$file.minisig" -t "lattice-plugins file:$file serial:$serial"
             minisign -V -p keys/primary.pub -m "site/$file" -x "site/$file.minisig"
           done
+      - uses: actions/upload-artifact@v7
+        with:
+          name: signed-site
+          path: site
+          if-no-files-found: error
+          retention-days: 7
       - uses: actions/upload-pages-artifact@v5
         with:
           path: site
+
+  # Keeps https://leo1oel.github.io/lattice-plugins, the address Lattice read before the
+  # registry moved to lattice-writer, serving the same signed files. Its deploy key can
+  # write only to leo1oel/lattice-plugins.
+  mirror:
+    needs: sign
+    runs-on: ubuntu-latest
+    environment: registry-mirror
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: signed-site
+          path: site
+      - name: Push the signed site to leo1oel/lattice-plugins
+        env:
+          MIRROR_DEPLOY_KEY: ${{ secrets.MIRROR_DEPLOY_KEY }}
+        run: |
+          set -euo pipefail
+          umask 077
+          key="$RUNNER_TEMP/mirror.key"
+          hosts="$RUNNER_TEMP/known_hosts"
+          trap 'rm -f "$key"' EXIT
+          printf '%s\n' "$MIRROR_DEPLOY_KEY" > "$key"
+          echo "github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl" > "$hosts"
+          cd site
+          touch .nojekyll
+          printf '%s\n' "# lattice-plugins (mirror)" "" \
+            "The Lattice plugin and theme registry moved to https://github.com/lattice-writer/lattice-plugins." \
+            "This repository only serves its signed files at https://leo1oel.github.io/lattice-plugins for Lattice releases from before the move." > README.md
+          git init -q -b gh-pages
+          git add -A
+          git -c user.name="lattice-plugins publish" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+            commit -q -m "Mirror lattice-writer/lattice-plugins@$GITHUB_SHA"
+          GIT_SSH_COMMAND="ssh -i $key -o IdentitiesOnly=yes -o UserKnownHostsFile=$hosts -o StrictHostKeyChecking=yes" \
+            git push -q -f git@github.com:leo1oel/lattice-plugins.git gh-pages
 
   deploy:
     needs: sign
