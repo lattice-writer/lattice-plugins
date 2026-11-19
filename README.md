@@ -8,11 +8,11 @@ the plugin zips and the kill switch, to GitHub Pages:
 
 | File | URL |
 |---|---|
-| Index | https://leo1oel.github.io/lattice-plugins/index.json |
-| Index signature | https://leo1oel.github.io/lattice-plugins/index.json.minisig |
-| Kill switch | https://leo1oel.github.io/lattice-plugins/blocked.json |
-| Kill switch signature | https://leo1oel.github.io/lattice-plugins/blocked.json.minisig |
-| Theme schema | https://leo1oel.github.io/lattice-plugins/schema/theme-1.json |
+| Index | https://lattice-writer.github.io/lattice-plugins/index.json |
+| Index signature | https://lattice-writer.github.io/lattice-plugins/index.json.minisig |
+| Kill switch | https://lattice-writer.github.io/lattice-plugins/blocked.json |
+| Kill switch signature | https://lattice-writer.github.io/lattice-plugins/blocked.json.minisig |
+| Theme schema | https://lattice-writer.github.io/lattice-plugins/schema/theme-1.json |
 
 Lattice verifies both signatures against public keys compiled into the app
 ([`keys/primary.pub`](keys/primary.pub), with [`keys/backup.pub`](keys/backup.pub) held
@@ -30,7 +30,7 @@ every platform. The format is documented in Lattice's
 
 1. Keep your theme in a public GitHub repository as a `*.lattice-theme.json` file,
    at most 256 KiB, that validates against
-   `https://leo1oel.github.io/lattice-plugins/schema/theme-1.json`. Pick a reverse-domain
+   `https://lattice-writer.github.io/lattice-plugins/schema/theme-1.json`. Pick a reverse-domain
    `id` you own (for example `io.github.<you>.<theme>`); `app.lattice.*` is reserved for
    the themes bundled with Lattice. Include a licence.
 2. Tag the commit you want listed and push the tag.
@@ -40,7 +40,7 @@ every platform. The format is documented in Lattice's
    {
      "id": "io.github.leo1oel.harbor",
      "version": "1.0.0",
-     "repository": "https://github.com/leo1oel/lattice-plugins",
+     "repository": "https://github.com/lattice-writer/lattice-plugins",
      "tag": "examples/harbor-v1.0.0",
      "commit": "<the full 40-character sha the tag points at>",
      "path": "examples/harbor.lattice-theme.json",
@@ -160,7 +160,7 @@ published with the index:
     "versions": "<=0.3.1",
     "action": "disable",
     "reason": "Sent bibliography contents to an undeclared server.",
-    "url": "https://github.com/leo1oel/lattice-plugins/issues/123"
+    "url": "https://github.com/lattice-writer/lattice-plugins/issues/123"
   }
 ]
 ```
@@ -194,11 +194,11 @@ published on the next signed run like any other change.
       "author": "leo1oel",
       "license": "MIT",
       "description": "…",
-      "repository": "https://github.com/leo1oel/lattice-plugins",
+      "repository": "https://github.com/lattice-writer/lattice-plugins",
       "tag": "examples/harbor-v1.0.0",
       "commit": "…",
       "path": "examples/harbor.lattice-theme.json",
-      "url": "https://leo1oel.github.io/lattice-plugins/themes/io.github.leo1oel.harbor/1.0.0.lattice-theme.json",
+      "url": "https://lattice-writer.github.io/lattice-plugins/themes/io.github.leo1oel.harbor/1.0.0.lattice-theme.json",
       "sha256": "…",
       "size": 2052,
       "variants": [
@@ -221,7 +221,7 @@ published on the next signed run like any other change.
       "categories": ["citations"],
       "permissions": { "projectRead": ["bibliography"], "networkLocal": [23119], "network": [], "secrets": [] },
       "commands": [{ "id": "search", "title": "Search Zotero…", "description": "…" }],
-      "url": "https://leo1oel.github.io/lattice-plugins/plugins/app.lattice.zotero-search/0.1.0.zip",
+      "url": "https://lattice-writer.github.io/lattice-plugins/plugins/app.lattice.zotero-search/0.1.0.zip",
       "sha256": "…",
       "size": 7386,
       "downloads": null,

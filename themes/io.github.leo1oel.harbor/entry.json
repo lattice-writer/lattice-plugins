@@ -1,7 +1,7 @@
 {
   "id": "io.github.leo1oel.harbor",
   "version": "1.0.0",
-  "repository": "https://github.com/leo1oel/lattice-plugins",
+  "repository": "https://github.com/lattice-writer/lattice-plugins",
   "tag": "examples/harbor-v1.0.0",
   "commit": "cd0df3386e912e6ac54118c48763dbb59cb120b6",
   "path": "examples/harbor.lattice-theme.json",
